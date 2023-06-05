@@ -1,0 +1,119 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Click the happy man! | 20alse games</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
+  <link rel="stylesheet" href="/style.css">
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+<style>
+    body {
+display: flex;
+justify-content: center;
+align-items: center;
+font-family: 'Comic Sans MS', sans-serif;
+background-color: aqua;
+}
+#text {
+    display: flex;
+    flex-direction: column;
+}
+#top-text {
+  color: blue;
+}
+#happy-man {
+    width: auto;
+    height: auto;
+    max-width: 75%;
+}
+#happy-man:focus {
+    animation: wobble;
+}
+#click-count {
+    color: red;
+}
+#info {
+    color: green;
+    font-size: 80%;
+}
+</style>
+</head>
+
+<body>
+  <script src="/script.js"></script>
+  <img id="happy-man" src="https://i.ibb.co/G2fFvdC/imageedit-1-2140720519.png" alt="imageedit-1-2140720519" border="0" onclick="increaseclickcount()">
+  <div id="text">
+  <h1 id="top-text">
+    &larr; Click the happy man!
+  </h1>  
+  <h3 id="click-count">Current click count: <span id="clicks"></span></h3>
+  <p id="info"><b>Please keep in mind</b> that the click count is stored in your cookies, so please don't clean them if you want to keep your score.<br>
+Thank you for clicking on the happy man!<br>Photo credit: <a href="https://pixabay.com/sv/photos/k%C3%A4nslor-mannen-glad-ledsen-ansikte-371238/">Pixabay</a>.<br>
+Invented by Albin.</p>
+  </div>
+ <script>
+ const animateCSS = (element, animation, prefix = 'animate__') =>
+  // We create a Promise and return it
+  new Promise((resolve, reject) => {
+    const animationName = `${prefix}${animation}`;
+    const node = document.querySelector(element);
+
+    node.classList.add(`${prefix}animated`, animationName);
+
+    // When the animation ends, we clean the classes and resolve the Promise
+    function handleAnimationEnd() {
+      node.classList.remove(`${prefix}animated`, animationName);
+      resolve('Animation ended');
+    }
+
+    node.addEventListener('animationend', handleAnimationEnd, {once: true});
+  });
+    function updateclicktext(clicks){
+        var element = document.getElementById("clicks");
+        element.innerHTML = clicks
+        if (clicks == 69){
+        element.style.color = "yellow"
+        }
+        else if (clicks == 420){
+        element.style.color = "green"
+        }
+        else if (clicks == 999){
+        element.style.color = "blue"
+        }
+	else if (clicks == 69420){
+        element.style.color = "pink"
+        }
+	else if (clicks == 666){
+        element.style.color = "black"
+        element.style.background = "red"
+        }
+        else {
+        element.style.color = "red"
+        element.style.transform = null
+        element.style.background = null
+        }
+    }
+    var click_cookie = Cookies.get("clicks")
+    if (click_cookie == null){
+        click_cookie = '0'
+        Cookies.set('clicks', click_cookie, { expires: 800 })
+    } 
+    updateclicktext(click_cookie)
+    function increaseclickcount() {
+        var click_cookie = parseInt(Cookies.get("clicks")) + 1;
+        Cookies.set('clicks', click_cookie.toString(), { expires: 800 })
+        console.log("Clicks updated to " + click_cookie);
+        updateclicktext(click_cookie);
+        animateCSS("#happy-man", "pulse")
+    }
+</script>
+</body>
+
+</html>
